@@ -11,6 +11,33 @@ import session from 'express-session';
 import secControllers from './controllers/SecControllers.js';
 
 dotenv.config();
+
 const app = express();
+
 const _dirname = (process.platform === 'win32')? fileURLToPath(new URL(".", import.meta.url)): path.dirname(new URL(import.meta.url).pathname);
 
+const port = process.env.PORT || 4000;
+
+const corsOptions = {
+    origin: 'http://localhost:4000',
+    methods:['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: false
+};
+
+app.use(cors(corsOptions));
+
+app.use(helmet());
+
+app.use(morgan('dev'));
+
+app.use(express.json());
+
+app.use(express.urlencoded({extended: false}));
+
+app.post('/enviarErrorPris', secControllers.EnviarErrorPris);
+
+app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
+
+app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
+});

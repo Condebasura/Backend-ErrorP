@@ -1,8 +1,10 @@
 import sqlite3 from 'sqlite3';
 import {v4 as uuidv4} from 'uuid';
-import {bcrypt} from 'bcrypt';
+import pkg from 'bcrypt';
+
+const {bcrypt} = pkg;
 const saltRounds = 10;
-let bd = new sqlite3.Database('/data/DataBase.db', (err) => {
+let bd = new sqlite3.Database('./data/DataBase.db', (err) => {
   if (err) {
     console.error('Error opening database', err);
   } else {
@@ -80,7 +82,7 @@ const SesionUsuario = async (user) =>{
         resolve(false);
       }
       try{
-        const PasswordMatch = await bcrypt.compare(contraseña , row.contraseña);
+        const PasswordMatch =  bcrypt.compare(contraseña , row.contraseña);
         if(PasswordMatch){
           resolve(row);
         }else{
