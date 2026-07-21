@@ -15,7 +15,7 @@ bd.run('CREATE TABLE IF NOT EXISTS ErrorPris(id TEXT PRIMARY KEY, fecha TEXT NOT
 
 bd.run('CREATE TABLE IF NOT EXISTS Usuario(id TEXT PRIMARY KEY , nombre TEXT , apellido TEXT , contraseña TEXT , rol TEXT)');
 
-bd.run('CREATE TABLE FI NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
+bd.run('CREATE TABLE IF NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
 
 const InsertarErrorPris = async (ErrorPris)=>{
   try{
@@ -43,6 +43,18 @@ const InsertarUsuario = async (Usuario)=>{
     console.error('Error al ingresar el usuario:', error);
     return { success: false, message: 'Error al ingresar el usuario' };
   } 
+};
+
+const DataErrorPris = async ()=>{
+  return new Promise((resolve, reject) => {
+    bd.all('SELECT * FROM ErrorPris', [], (error, rows) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(rows);
+      }
+    });
+  });
 };
 
 const BuscarUsuario = async (id) => {
@@ -86,6 +98,7 @@ const SesionUsuario = async (user) =>{
 
 export default{
   InsertarErrorPris,
+  DataErrorPris,
   InsertarUsuario,
   BuscarUsuario,
   SesionUsuario

@@ -21,7 +21,17 @@ const EnviarErrorPris = async (req, res)=>{
     }
 };
 
+const GetDataErrorPris = async (req, res) => {
+    try {
+        const data = await bd.DataErrorPris();  
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los datos' });
+    }
+};
 
 export default{
-    EnviarErrorPris
+    EnviarErrorPris,
+    GetDataErrorPris
 }
