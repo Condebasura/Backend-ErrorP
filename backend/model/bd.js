@@ -15,7 +15,9 @@ bd.run('CREATE TABLE IF NOT EXISTS ErrorPris(id TEXT PRIMARY KEY, fecha TEXT NOT
 
 bd.run('CREATE TABLE IF NOT EXISTS Usuario(id TEXT PRIMARY KEY , nombre TEXT , apellido TEXT , contraseña TEXT , rol TEXT)');
 
-const InsertarErroePris = async (ErrorPris)=>{
+bd.run('CREATE TABLE FI NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
+
+const InsertarErrorPris = async (ErrorPris)=>{
   try{
      const id = uuidv4();
      let stmt = bd.prepare('INSERT INTO ErrorPris(id , fecha , hora , combustible , problema , como_se_cobro , observaciones, id_usuario) VALUES(?,?,?,?,?,?,?,?)');
@@ -29,3 +31,62 @@ const InsertarErroePris = async (ErrorPris)=>{
   } 
 };
 
+const InsertarUsuario = async (Usuario)=>{
+  try{
+     const id = uuidv4();
+     let stmt = bd.prepare('INSERT INTO Usuario(id , nombre , apellido , contraseña , rol) VALUES(?,?,?,?,?)');
+     stmt.run(id, Usuario.nombre, Usuario.apellido, await bcrypt.hash(Usuario.contraseña, saltRounds), Usuario.rol);
+     stmt.finalize();
+     return { success: true, message: 'El usuario se ingresó con exito' };
+
+  }catch (error) {
+    console.error('Error al ingresar el usuario:', error);
+    return { success: false, message: 'Error al ingresar el usuario' };
+  } 
+};
+
+const BuscarUsuario = async (id) => {
+  return new Promise((resolve, reject) => {
+    bd.get('SELECT * FROM Usuario WHERE id = ?', [id], (error, row) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};
+
+const SesionUsuario = async (user) =>{
+  return new Promise((resolve, reject)=>{
+    let sql = 'SELECT * FROM Usuario WHERE contraseña = ?';
+    let contraseña = user.contraseña;
+    bd.get(sql, [contraseña], (error, row) => {
+      if (error) {
+        reject(error);
+      } if(!row) {
+        resolve(false);
+      }
+      try{
+        const PasswordMatch = await bcrypt.compare(contraseña , row.contraseña);
+        if(PasswordMatch){
+          resolve(row);
+        }else{
+          resolve(false);
+        }
+      }catch(error){
+        if (error) {
+          console.error('Error al comparar las contraseñas:', bcryptError);
+        reject(btcryptError);
+      }
+      }
+    });
+  })
+}
+
+export default{
+  InsertarErrorPris,
+  InsertarUsuario,
+  BuscarUsuario,
+  SesionUsuario
+}
