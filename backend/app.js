@@ -19,7 +19,7 @@ const _dirname = (process.platform === 'win32')? fileURLToPath(new URL(".", impo
 const port = process.env.PORT || 4000;
 
 const corsOptions = {
-    origin: 'http://localhost:4000',
+    origin: 'http://localhost:5173',
     methods:['GET', 'POST', 'PUT', 'DELETE'],
     credentials: false
 };

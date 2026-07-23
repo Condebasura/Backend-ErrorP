@@ -12,7 +12,7 @@ let bd = new sqlite3.Database('./data/DataBase.db', (err) => {
   }
 });
 
-bd.run('CREATE TABLE IF NOT EXISTS ErrorPris(id TEXT PRIMARY KEY, fecha TEXT NOT NULL , hora TEXT NOT NULL , combustible TEXT , problema TEXT , como_se_cobro TEXT , observaciones TEXT , id_usuario TEXT NOT NULL , FOREIGN KEY (id_usuario) REFERENCES Usuario(id))');
+bd.run('CREATE TABLE IF NOT EXISTS ErrorPris(id TEXT PRIMARY KEY, fecha TEXT NOT NULL , hora TEXT NOT NULL , combustible TEXT , problema TEXT , como_se_cobro TEXT , observaciones TEXT , id_usuario TEXT , FOREIGN KEY (id_usuario) REFERENCES Usuario(id))');
 
 
 bd.run('CREATE TABLE IF NOT EXISTS Usuario(id TEXT PRIMARY KEY , nombre TEXT , apellido TEXT , contraseña TEXT , rol TEXT)');
@@ -25,6 +25,7 @@ const InsertarErrorPris = async (ErrorPris)=>{
      let stmt = bd.prepare('INSERT INTO ErrorPris(id , fecha , hora , combustible , problema , como_se_cobro , observaciones, id_usuario) VALUES(?,?,?,?,?,?,?,?)');
      stmt.run(id, ErrorPris.fecha, ErrorPris.hora, ErrorPris.combustible, ErrorPris.problema, ErrorPris.como_se_cobro, ErrorPris.observaciones, ErrorPris.id_usuario);
      stmt.finalize();
+     console.log(ErrorPris);
      return { success: true, message: 'El problema se envio con exito' };
 
   }catch (error) {
@@ -32,7 +33,7 @@ const InsertarErrorPris = async (ErrorPris)=>{
     return { success: false, message: 'Error al enviar el problema' };
   } 
 };
-
+  
 const InsertarUsuario = async (Usuario)=>{
   try{
      const id = uuidv4();
