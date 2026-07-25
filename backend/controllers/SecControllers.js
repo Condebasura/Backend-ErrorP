@@ -7,8 +7,10 @@ const EnviarErrorPris = async (req, res)=>{
             fecha: new Date().toLocaleDateString().slice(0, 10),
             hora: new Date().toLocaleTimeString(),
             combustible: req.body.combustible,
+            monto: req.body.monto,
             problema: req.body.problema,
             como_se_cobro: req.body.como_se_cobro,
+            monto_cobrado: req.body.monto_cobrado,
             observaciones: req.body.observaciones,
             id_usuario: req.body.id_usuario
         }

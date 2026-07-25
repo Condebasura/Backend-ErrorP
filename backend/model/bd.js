@@ -22,8 +22,8 @@ bd.run('CREATE TABLE IF NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
 const InsertarErrorPris = async (ErrorPris)=>{
   try{
      const id = uuidv4();
-     let stmt = bd.prepare('INSERT INTO ErrorPris(id , fecha , hora , combustible , problema , como_se_cobro , observaciones, id_usuario) VALUES(?,?,?,?,?,?,?,?)');
-     stmt.run(id, ErrorPris.fecha, ErrorPris.hora, ErrorPris.combustible, ErrorPris.problema, ErrorPris.como_se_cobro, ErrorPris.observaciones, ErrorPris.id_usuario);
+     let stmt = bd.prepare('INSERT INTO ErrorPris(id , fecha , hora , combustible ,monto, problema , como_se_cobro ,monto_cobrado, observaciones, id_usuario) VALUES(?,?,?,?,?,?,?,?)');
+     stmt.run(id, ErrorPris.fecha, ErrorPris.hora, ErrorPris.combustible,ErrorPris.monto, ErrorPris.problema, ErrorPris.como_se_cobro,ErrorPris.monto_cobrado, ErrorPris.observaciones, ErrorPris.id_usuario);
      stmt.finalize();
      console.log(ErrorPris);
      return { success: true, message: 'El problema se envio con exito' };
