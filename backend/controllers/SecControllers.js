@@ -34,7 +34,24 @@ const GetDataErrorPris = async (req, res) => {
     }
 };
 
+const CrearUsuario = async (req, res) => {
+    try {
+        const Usuario = {
+            nombre: req.body.nombre,
+            apellido: req.body.apellido,
+            contraseña: req.body.contraseña,
+            rol: req.body.rol
+        };
+        const data = await bd.InsertarUsuario(Usuario);
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al crear el usuario:', error);
+        return res.status(500).json({ mensaje: 'Error al crear el usuario' });
+    }
+};
+
 export default{
     EnviarErrorPris,
-    GetDataErrorPris
+    GetDataErrorPris,
+    CrearUsuario
 }

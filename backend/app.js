@@ -35,6 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.post('/enviarErrorPris', secControllers.EnviarErrorPris);
+app.post('/crearUsuario', secControllers.CrearUsuario);
 
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
 

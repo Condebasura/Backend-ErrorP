@@ -1,8 +1,8 @@
 import sqlite3 from 'sqlite3';
 import {v4 as uuidv4} from 'uuid';
 import pkg from 'bcrypt';
+import bcrypt from 'bcrypt';
 
-const {bcrypt} = pkg;
 const saltRounds = 10;
 let bd = new sqlite3.Database('./data/DataBase.db', (err) => {
   if (err) {
@@ -12,7 +12,7 @@ let bd = new sqlite3.Database('./data/DataBase.db', (err) => {
   }
 });
 
-bd.run('CREATE TABLE IF NOT EXISTS ErrorPris(id TEXT PRIMARY KEY, fecha TEXT NOT NULL , hora TEXT NOT NULL , combustible TEXT , problema TEXT , como_se_cobro TEXT , observaciones TEXT , id_usuario TEXT , FOREIGN KEY (id_usuario) REFERENCES Usuario(id))');
+bd.run('CREATE TABLE IF NOT EXISTS ErrorPris(id TEXT PRIMARY KEY, fecha TEXT NOT NULL , hora TEXT NOT NULL , combustible TEXT ,monto text, problema TEXT , como_se_cobro TEXT ,monto_cobrado TEXT, observaciones TEXT , id_usuario TEXT , FOREIGN KEY (id_usuario) REFERENCES Usuario(id))');
 
 
 bd.run('CREATE TABLE IF NOT EXISTS Usuario(id TEXT PRIMARY KEY , nombre TEXT , apellido TEXT , contraseña TEXT , rol TEXT)');
@@ -22,7 +22,7 @@ bd.run('CREATE TABLE IF NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
 const InsertarErrorPris = async (ErrorPris)=>{
   try{
      const id = uuidv4();
-     let stmt = bd.prepare('INSERT INTO ErrorPris(id , fecha , hora , combustible ,monto, problema , como_se_cobro ,monto_cobrado, observaciones, id_usuario) VALUES(?,?,?,?,?,?,?,?)');
+     let stmt = bd.prepare('INSERT INTO ErrorPris(id , fecha , hora , combustible ,monto, problema , como_se_cobro ,monto_cobrado, observaciones, id_usuario) VALUES(?,?,?,?,?,?,?,?,?,?)');
      stmt.run(id, ErrorPris.fecha, ErrorPris.hora, ErrorPris.combustible,ErrorPris.monto, ErrorPris.problema, ErrorPris.como_se_cobro,ErrorPris.monto_cobrado, ErrorPris.observaciones, ErrorPris.id_usuario);
      stmt.finalize();
      console.log(ErrorPris);
