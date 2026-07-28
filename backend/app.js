@@ -38,6 +38,7 @@ app.post('/enviarErrorPris', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
 
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
+app.get('/getRoles', secControllers.GetRoles);
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);

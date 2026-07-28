@@ -39,7 +39,7 @@ const CrearUsuario = async (req, res) => {
         const Usuario = {
             nombre: req.body.nombre,
             apellido: req.body.apellido,
-            contraseña: req.body.contraseña,
+            password: req.body.password,
             rol: req.body.rol
         };
         const data = await bd.InsertarUsuario(Usuario);
@@ -50,8 +50,20 @@ const CrearUsuario = async (req, res) => {
     }
 };
 
+const GetRoles = async (req, res) => {
+    try {
+        const data = await bd.GetRoles();
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los roles:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los roles' });
+    }
+};
+
 export default{
     EnviarErrorPris,
     GetDataErrorPris,
-    CrearUsuario
+    CrearUsuario,
+    GetRoles
 }
+

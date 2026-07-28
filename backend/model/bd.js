@@ -15,7 +15,7 @@ let bd = new sqlite3.Database('./data/DataBase.db', (err) => {
 bd.run('CREATE TABLE IF NOT EXISTS ErrorPris(id TEXT PRIMARY KEY, fecha TEXT NOT NULL , hora TEXT NOT NULL , combustible TEXT ,monto text, problema TEXT , como_se_cobro TEXT ,monto_cobrado TEXT, observaciones TEXT , id_usuario TEXT , FOREIGN KEY (id_usuario) REFERENCES Usuario(id))');
 
 
-bd.run('CREATE TABLE IF NOT EXISTS Usuario(id TEXT PRIMARY KEY , nombre TEXT , apellido TEXT , contraseña TEXT , rol TEXT)');
+bd.run('CREATE TABLE IF NOT EXISTS Usuario(id TEXT PRIMARY KEY , nombre TEXT , apellido TEXT , password TEXT , rol TEXT)');
 
 bd.run('CREATE TABLE IF NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
 
@@ -37,8 +37,9 @@ const InsertarErrorPris = async (ErrorPris)=>{
 const InsertarUsuario = async (Usuario)=>{
   try{
      const id = uuidv4();
-     let stmt = bd.prepare('INSERT INTO Usuario(id , nombre , apellido , contraseña , rol) VALUES(?,?,?,?,?)');
-     stmt.run(id, Usuario.nombre, Usuario.apellido, await bcrypt.hash(Usuario.contraseña, saltRounds), Usuario.rol);
+     let stmt = bd.prepare('INSERT INTO Usuario(id , nombre , apellido , password , rol) VALUES(?,?,?,?,?)');
+     console.log(Usuario);
+     stmt.run(id, Usuario.nombre, Usuario.apellido, await bcrypt.hash(Usuario.password, saltRounds), Usuario.rol);
      stmt.finalize();
      return { success: true, message: 'El usuario se ingresó con exito' };
 
@@ -74,16 +75,16 @@ const BuscarUsuario = async (id) => {
 
 const SesionUsuario = async (user) =>{
   return new Promise((resolve, reject)=>{
-    let sql = 'SELECT * FROM Usuario WHERE contraseña = ?';
-    let contraseña = user.contraseña;
-    bd.get(sql, [contraseña], (error, row) => {
+    let sql = 'SELECT * FROM Usuario WHERE password = ?';
+    let pasword = user.password;
+    bd.get(sql, [pasword], (error, row) => {
       if (error) {
         reject(error);
       } if(!row) {
         resolve(false);
       }
       try{
-        const PasswordMatch =  bcrypt.compare(contraseña , row.contraseña);
+        const PasswordMatch =  bcrypt.compare(pasword , row.password);
         if(PasswordMatch){
           resolve(row);
         }else{
@@ -99,10 +100,22 @@ const SesionUsuario = async (user) =>{
   })
 }
 
+const GetRoles = async () =>{
+  return new Promise((resolve, reject) => {
+    bd.all('SELECT * FROM Roles', [], (error, rows) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(rows);
+      } 
+    })
+    })
+}
 export default{
   InsertarErrorPris,
   DataErrorPris,
   InsertarUsuario,
   BuscarUsuario,
-  SesionUsuario
+  SesionUsuario,
+  GetRoles
 }
