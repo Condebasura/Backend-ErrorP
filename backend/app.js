@@ -18,6 +18,46 @@ const _dirname = (process.platform === 'win32')? fileURLToPath(new URL(".", impo
 
 const port = process.env.PORT || 4000;
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:5173',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: false
+    }
+});
+
+const sessionMiddleware = session({
+    secret: 'petro_tanque_ruido',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        sameSite: true
+    }
+});
+
+app.use(sessionMiddleware);
+io.use((socket, next) => {
+    sessionMiddleware(socket.request, {}, next);
+});
+
+io.on('connection', (socket) => {
+    console.log('🟢 Un usuario se ha conectado', socket.id);
+    const session = socket.request.session;
+    const userId = session?.usuario?.id;
+    if(userId){
+        socket.join(userId);
+    }
+    socket.on('disconnect', () => {
+        console.log('🔴 Un usuario se ha desconectado', socket.id
+
+        );
+    });
+});
+
+
 const corsOptions = {
     origin: 'http://localhost:5173',
     methods:['GET', 'POST', 'PUT', 'DELETE'],
@@ -33,6 +73,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use(express.urlencoded({extended: false}));
+app.use(session({
+    secret: 'petro_tanque_ruido',
+    resave: false,
+    saveUninitialized: false
+}))
 
 app.post('/enviarErrorPris', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
@@ -40,6 +85,11 @@ app.post('/crearUsuario', secControllers.CrearUsuario);
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
 app.get('/getRoles', secControllers.GetRoles);
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
 });
+
+export{
+    _dirname,
+    io
+}
