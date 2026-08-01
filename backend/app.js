@@ -81,6 +81,8 @@ app.use(session({
 
 app.post('/enviarErrorPris', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
+app.post('/postUsuario', secControllers.PostUsuario);
+app.get('/Sesions', secControllers.GetSesions);
 
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
 app.get('/getRoles', secControllers.GetRoles);

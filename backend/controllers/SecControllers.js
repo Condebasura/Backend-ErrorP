@@ -56,6 +56,7 @@ const PostUsuario = async (req, res)=>{
         const user = {
             password: req.body.password,
         }
+        console.log(user)
         const data = await bd.SesionUsuario(user);
         console.log("el usuario ingresado es:",data);
         if(!data){
@@ -79,7 +80,29 @@ const PostUsuario = async (req, res)=>{
     } catch (error) {
         res.status(500).json({mensaje: 'Error interno del servidor', error})
     }
-}
+};
+
+const GetSesions = async (req, res) => {
+    try {
+        if(req.session.usuario){
+       let rol = req.session.usuario?.rol;
+       let apellido = req.session.usuario?.apellido;     
+            return res.status(200).json({
+                logueado:true,
+                usuario: req.session.usuario,
+            });
+        }else{
+
+    
+
+        
+        return res.status(401).json({logueado: false})
+    }
+    } catch (error) {
+        console.error('Error al obtener las sesiones:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener las sesiones' });
+    }
+};
 
 const GetRoles = async (req, res) => {
     try {
@@ -95,6 +118,8 @@ export default{
     EnviarErrorPris,
     GetDataErrorPris,
     CrearUsuario,
-    GetRoles
+    GetRoles, 
+    PostUsuario,
+    GetSesions
 }
 
