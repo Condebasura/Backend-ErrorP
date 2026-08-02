@@ -1,4 +1,5 @@
 import bd from "../model/bd.js";
+import {_dirname, io} from "../app.js";
 
 
 const EnviarErrorPris = async (req, res)=>{
@@ -50,6 +51,59 @@ const CrearUsuario = async (req, res) => {
     }
 };
 
+const PostUsuario = async (req, res)=>{
+    try {
+        const user = {
+            password: req.body.password,
+        }
+        console.log(user)
+        const data = await bd.SesionUsuario(user);
+        console.log("el usuario ingresado es:",data);
+        if(!data){
+            return res.status(401).json({ mensaje: 'Credenciales incorrectas' });
+        }else{
+            req.session.usuario = {
+                id: data.id,
+                nombre: data.nombre,
+                apellido: data.apellido,
+                rol: data.rol
+            };
+            io.on('connection', socket =>{
+                socket.on('register-session', userId =>{
+                    socket.join(userId);
+                })
+            })
+            const userId = req.session.usuario;
+            io.emit('session:updated')
+            return res.status(200).json({ok: true, userId});
+        }
+    } catch (error) {
+        res.status(500).json({mensaje: 'Error interno del servidor', error})
+    }
+};
+
+const GetSesions = async (req, res) => {
+    try {
+        if(req.session.usuario){
+       let rol = req.session.usuario?.rol;
+       let apellido = req.session.usuario?.apellido;     
+            return res.status(200).json({
+                logueado:true,
+                usuario: req.session.usuario,
+            });
+        }else{
+
+    
+
+        
+        return res.status(401).json({logueado: false})
+    }
+    } catch (error) {
+        console.error('Error al obtener las sesiones:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener las sesiones' });
+    }
+};
+
 const GetRoles = async (req, res) => {
     try {
         const data = await bd.GetRoles();
@@ -64,6 +118,8 @@ export default{
     EnviarErrorPris,
     GetDataErrorPris,
     CrearUsuario,
-    GetRoles
+    GetRoles, 
+    PostUsuario,
+    GetSesions
 }
 

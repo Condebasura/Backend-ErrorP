@@ -76,26 +76,29 @@ const BuscarUsuario = async (id) => {
 const SesionUsuario = async (user) =>{
   return new Promise((resolve, reject)=>{
     let sql = 'SELECT * FROM Usuario WHERE password = ?';
-    let pasword = user.password;
-    bd.get(sql, [pasword], (error, row) => {
+   
+    let password = user.password;
+    bd.get(sql, [password], (error, row) => {
       if (error) {
         reject(error);
       } if(!row) {
         resolve(false);
       }
+      console.log(password);
+     console.log(row)
       try{
-        const PasswordMatch =  bcrypt.compare(pasword , row.password);
-        if(PasswordMatch){
-          resolve(row);
-        }else{
+        const PasswordMatch = await  bcrypt.compare(password , row.password);
+        if(!PasswordMatch){
           resolve(false);
         }
-      }catch(error){
-        if (error) {
+          resolve(row);
+        
+      }catch(bcryptError){
+        
           console.error('Error al comparar las contraseñas:', bcryptError);
-        reject(btcryptError);
+        reject(bcryptError);
       }
-      }
+      
     });
   })
 }
