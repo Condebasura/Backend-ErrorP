@@ -51,14 +51,28 @@ const CrearUsuario = async (req, res) => {
     }
 };
 
+const SelectUsuario = async (req, res)=>{
+    try {
+        const data = await bd.consultUsuario();
+    if(!data){
+        return res.status(404).json({ mensaje: 'No se encontraron usuarios' });
+    }
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los usuarios:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los usuarios' });
+    }
+}
+
 const PostUsuario = async (req, res)=>{
     try {
         const user = {
+            apellido: req.body.apellido,
             password: req.body.password,
         }
         console.log(user)
         const data = await bd.SesionUsuario(user);
-        console.log("el usuario ingresado es:",data);
+        
         if(!data){
             return res.status(401).json({ mensaje: 'Credenciales incorrectas' });
         }else{
@@ -120,6 +134,7 @@ export default{
     CrearUsuario,
     GetRoles, 
     PostUsuario,
-    GetSesions
+    GetSesions,
+    SelectUsuario
 }
 

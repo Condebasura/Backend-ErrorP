@@ -73,19 +73,30 @@ const BuscarUsuario = async (id) => {
   });
 };
 
-const SesionUsuario = async (user) =>{
+const consultUsuario = async ()=>{
+  return new Promise((resolve , reject)=>{
+    bd.all('SELECT * FROM Usuario', (error, rows) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(rows);
+      }
+    });
+  })
+}
+
+const SesionUsuario = (user) =>{
   return new Promise((resolve, reject)=>{
-    let sql = 'SELECT * FROM Usuario WHERE password = ?';
-   
+    let sql = 'SELECT * FROM Usuario WHERE apellido = ?';
+    let usuario = user.apellido;
     let password = user.password;
-    bd.get(sql, [password], (error, row) => {
+    bd.get(sql, [usuario], async (error, row) => {
       if (error) {
         reject(error);
       } if(!row) {
         resolve(false);
       }
-      console.log(password);
-     console.log(row)
+      
       try{
         const PasswordMatch = await  bcrypt.compare(password , row.password);
         if(!PasswordMatch){
@@ -120,5 +131,6 @@ export default{
   InsertarUsuario,
   BuscarUsuario,
   SesionUsuario,
-  GetRoles
+  GetRoles, 
+  consultUsuario
 }

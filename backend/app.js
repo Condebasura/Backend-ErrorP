@@ -24,7 +24,7 @@ const io = new Server(server, {
     cors: {
         origin: 'http://localhost:5173',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        credentials: false
+        credentials: true
     }
 });
 
@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
 const corsOptions = {
     origin: 'http://localhost:5173',
     methods:['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: false
+    credentials: true
 };
 
 app.use(cors(corsOptions));
@@ -83,7 +83,7 @@ app.post('/enviarErrorPris', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
 app.post('/postUsuario', secControllers.PostUsuario);
 app.get('/Sesions', secControllers.GetSesions);
-
+app.get('/selectUsuario', secControllers.SelectUsuario);
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
 app.get('/getRoles', secControllers.GetRoles);
 
