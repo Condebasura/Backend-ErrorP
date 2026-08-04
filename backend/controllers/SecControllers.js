@@ -4,6 +4,9 @@ import {_dirname, io} from "../app.js";
 
 const EnviarErrorPris = async (req, res)=>{
     try{
+            let id= req.session?.usuario?.id;
+            console.log('El id del usuario es', id);
+
         const ErrorPris = {
             fecha: new Date().toLocaleDateString().slice(0, 10),
             hora: new Date().toLocaleTimeString(),
@@ -66,13 +69,14 @@ const SelectUsuario = async (req, res)=>{
 
 const PostUsuario = async (req, res)=>{
     try {
+        
         const user = {
             apellido: req.body.apellido,
             password: req.body.password,
         }
-        console.log(user)
         const data = await bd.SesionUsuario(user);
         
+        console.log("El id del usuario", data.id);
         if(!data){
             return res.status(401).json({ mensaje: 'Credenciales incorrectas' });
         }else{
