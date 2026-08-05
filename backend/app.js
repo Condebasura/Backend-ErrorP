@@ -36,6 +36,7 @@ const sessionMiddleware = session({
         secure: false,
         sameSite: true
     }
+  
 });
 
 app.use(sessionMiddleware);

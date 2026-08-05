@@ -2,10 +2,18 @@ import bd from "../model/bd.js";
 import {_dirname, io} from "../app.js";
 
 
+
 const EnviarErrorPris = async (req, res)=>{
     try{
-            let id= req.session?.usuario?.id;
+
+        // hay que traer el id del usuario
+        
             console.log('El id del usuario es', id);
+
+            const user = await bd.BuscarUsuario(id);
+            //const usuarioApellido = user.apellido;
+            console.log(user)
+            
 
         const ErrorPris = {
             fecha: new Date().toLocaleDateString().slice(0, 10),
@@ -16,7 +24,7 @@ const EnviarErrorPris = async (req, res)=>{
             como_se_cobro: req.body.como_se_cobro,
             monto_cobrado: req.body.monto_cobrado,
             observaciones: req.body.observaciones,
-            id_usuario: req.body.id_usuario
+            id_usuario: null
         }
             const data = await bd.InsertarErrorPris(ErrorPris);
             console.log(data);
