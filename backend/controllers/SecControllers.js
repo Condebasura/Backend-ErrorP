@@ -6,13 +6,12 @@ import {_dirname, io} from "../app.js";
 const EnviarErrorPris = async (req, res)=>{
     try{
 
-        // hay que traer el id del usuario
+        let id = req.session.usuario.id;
         
             console.log('El id del usuario es', id);
 
-            const user = await bd.BuscarUsuario(id);
-            //const usuarioApellido = user.apellido;
-            console.log(user)
+        
+            
             
 
         const ErrorPris = {
@@ -111,12 +110,16 @@ const PostUsuario = async (req, res)=>{
 const GetSesions = async (req, res) => {
     try {
         if(req.session.usuario){
+            let id = req.session.usuario?.id;
        let rol = req.session.usuario?.rol;
-       let apellido = req.session.usuario?.apellido;     
+       let apellido = req.session.usuario?.apellido;   
+       console.log('El  usuario es', req.session.usuario);  
             return res.status(200).json({
                 logueado:true,
                 usuario: req.session.usuario,
             });
+
+
         }else{
 
     
