@@ -6,11 +6,11 @@ import {_dirname, io} from "../app.js";
 const EnviarErrorPris = async (req, res)=>{
     try{
 
-        let id = req.session.usuario.id;
+        let id= req.params.id;
         
-            console.log('El id del usuario es', id);
+            console.log('El usuario es', id);
 
-        
+        const DatosUser = await bd.BuscarUsuario(id)
             
             
 
@@ -23,7 +23,7 @@ const EnviarErrorPris = async (req, res)=>{
             como_se_cobro: req.body.como_se_cobro,
             monto_cobrado: req.body.monto_cobrado,
             observaciones: req.body.observaciones,
-            id_usuario: null
+            id_usuario: DatosUser.apellido
         }
             const data = await bd.InsertarErrorPris(ErrorPris);
             console.log(data);
@@ -113,7 +113,7 @@ const GetSesions = async (req, res) => {
             let id = req.session.usuario?.id;
        let rol = req.session.usuario?.rol;
        let apellido = req.session.usuario?.apellido;   
-       console.log('El  usuario es', req.session.usuario);  
+        
             return res.status(200).json({
                 logueado:true,
                 usuario: req.session.usuario,

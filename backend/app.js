@@ -80,7 +80,7 @@ app.use(session({
     saveUninitialized: false
 }))
 
-app.post('/enviarErrorPris', secControllers.EnviarErrorPris);
+app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
 app.post('/postUsuario', secControllers.PostUsuario);
 app.get('/Sesions', secControllers.GetSesions);
