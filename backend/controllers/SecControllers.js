@@ -8,7 +8,7 @@ const EnviarErrorPris = async (req, res)=>{
 
         let id= req.params.id;
         
-            console.log('El usuario es', id);
+            
 
         const DatosUser = await bd.BuscarUsuario(id)
             
@@ -26,7 +26,7 @@ const EnviarErrorPris = async (req, res)=>{
             id_usuario: DatosUser.apellido
         }
             const data = await bd.InsertarErrorPris(ErrorPris);
-            console.log(data);
+        
             return res.status(200).json({mensaje: 'El problema se envio con exito'}); 
         } 
 
