@@ -83,10 +83,12 @@ app.use(session({
 app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
 app.post('/postUsuario', secControllers.PostUsuario);
+app.post('/crearCombustible', secControllers.CrearCombustible);
 app.get('/Sesions', secControllers.GetSesions);
 app.get('/selectUsuario', secControllers.SelectUsuario);
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
 app.get('/getRoles', secControllers.GetRoles);
+app.get('/selectCombustible', secControllers.SelectCombustible);
 
 server.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);

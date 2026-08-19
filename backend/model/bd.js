@@ -19,6 +19,8 @@ bd.run('CREATE TABLE IF NOT EXISTS Usuario(id TEXT PRIMARY KEY , nombre TEXT , a
 
 bd.run('CREATE TABLE IF NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
 
+bd.run('CREATE TABLE IF NOT EXISTS Combustible(id TEXT PRIMARY KEY , combustible TEXT)');
+
 const InsertarErrorPris = async (ErrorPris)=>{
   try{
      const id = uuidv4();
@@ -49,6 +51,19 @@ const InsertarUsuario = async (Usuario)=>{
   } 
 };
 
+const InsertCombustible = async (combustible)=>{
+  try{
+     const id = uuidv4();
+     let stmt = bd.prepare('INSERT INTO Combustible(id , combustible) VALUES(?,?)');
+     stmt.run(id, combustible);
+     stmt.finalize();
+     return { success: true, message: 'El combustible se ingresó con exito' };
+  }catch (error) {
+    console.error('Error al ingresar el combustible:', error);
+    return { success: false, message: 'Error al ingresar el combustible' };
+  }
+}
+
 const DataErrorPris = async ()=>{
   return new Promise((resolve, reject) => {
     bd.all('SELECT * FROM ErrorPris', [], (error, rows) => {
@@ -76,6 +91,18 @@ const BuscarUsuario = async (id) => {
 const consultUsuario = async ()=>{
   return new Promise((resolve , reject)=>{
     bd.all('SELECT * FROM Usuario', (error, rows) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(rows);
+      }
+    });
+  })
+}
+
+const consultCombustible = async ()=>{
+  return new Promise((resolve , reject)=>{
+    bd.all('SELECT * FROM Combustible', (error, rows) => {
       if (error) {
         reject(error);
       } else {
@@ -124,7 +151,9 @@ const GetRoles = async () =>{
       } 
     })
     })
-}
+};
+
+
 export default{
   InsertarErrorPris,
   DataErrorPris,
@@ -132,5 +161,7 @@ export default{
   BuscarUsuario,
   SesionUsuario,
   GetRoles, 
-  consultUsuario
+  consultUsuario,
+  InsertCombustible,
+  consultCombustible
 }

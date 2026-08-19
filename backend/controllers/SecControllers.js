@@ -61,6 +61,28 @@ const CrearUsuario = async (req, res) => {
     }
 };
 
+const CrearCombustible = async (req, res) => {
+    try {
+        const combustible = req.body.nombre;
+        const data = await bd.InsertCombustible(combustible);
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al crear el combustible:', error);
+        return res.status(500).json({ mensaje: 'Error al crear el combustible' });
+    }
+};
+
+const SelectCombustible = async (req , res)=>{
+    try {
+        const data = await bd.consultCombustible();
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los combustibles:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los combustibles' });
+    }
+}
+
 const SelectUsuario = async (req, res)=>{
     try {
         const data = await bd.consultUsuario();
@@ -150,6 +172,8 @@ export default{
     GetRoles, 
     PostUsuario,
     GetSesions,
-    SelectUsuario
+    SelectUsuario,
+    CrearCombustible,
+    SelectCombustible
 }
 
