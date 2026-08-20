@@ -75,13 +75,54 @@ const CrearCombustible = async (req, res) => {
 const SelectCombustible = async (req , res)=>{
     try {
         const data = await bd.consultCombustible();
-        console.log(data);
+
         return res.status(200).json(data);
     } catch (error) {
         console.error('Error al obtener los combustibles:', error);
         return res.status(500).json({ mensaje: 'Error al obtener los combustibles' });
     }
-}
+};
+
+const CrearTarjeta = async (req, res)=>{
+    try{
+        const tarjeta = req.body.nombre;
+        const data = await bd.InsertTarjeta(tarjeta);
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al crear la tarjeta:', error);
+        return res.status(500).json({ mensaje: 'Error al crear la tarjeta' });
+    }
+};
+
+const SelectTarjeta = async (req , res)=>{
+    try {
+        const data = await bd.DataTarjeta();
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener las tarjetas:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener las tarjetas' });
+    } };
+
+    const CrearProblema = async (req, res)=>{
+        try{
+            const problema = req.body.nombre;
+            const data = await bd.InsertProblema(problema);
+            return res.status(200).json(data);
+        } catch (error) {
+            console.error('Error al crear el problema:', error);
+            return res.status(500).json({ mensaje: 'Error al crear el problema' });
+        }
+    };
+
+    const SelectProblema = async (req, res)=>{
+        try {
+            const data = await bd.DataProblema();
+            return res.status(200).json(data);
+        } catch (error) {
+            console.error('Error al obtener los problemas:', error);
+            return res.status(500).json({ mensaje: 'Error al obtener los problemas' });
+        }
+    }
 
 const SelectUsuario = async (req, res)=>{
     try {
@@ -174,6 +215,10 @@ export default{
     GetSesions,
     SelectUsuario,
     CrearCombustible,
-    SelectCombustible
+    SelectCombustible,
+    CrearTarjeta,
+    SelectTarjeta,
+    CrearProblema,
+    SelectProblema
 }
 

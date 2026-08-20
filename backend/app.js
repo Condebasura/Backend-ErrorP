@@ -84,11 +84,15 @@ app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
 app.post('/postUsuario', secControllers.PostUsuario);
 app.post('/crearCombustible', secControllers.CrearCombustible);
+app.post('/crearProblema', secControllers.CrearProblema);
 app.get('/Sesions', secControllers.GetSesions);
 app.get('/selectUsuario', secControllers.SelectUsuario);
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
 app.get('/getRoles', secControllers.GetRoles);
 app.get('/selectCombustible', secControllers.SelectCombustible);
+app.post('/crearTarjeta', secControllers.CrearTarjeta);
+app.get('/selectTarjeta', secControllers.SelectTarjeta);
+app.get('/selectProblema', secControllers.SelectProblema);
 
 server.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);

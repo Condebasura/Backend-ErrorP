@@ -21,6 +21,9 @@ bd.run('CREATE TABLE IF NOT EXISTS Roles(id TEXT PRIMARY KEY , rol TEXT)');
 
 bd.run('CREATE TABLE IF NOT EXISTS Combustible(id TEXT PRIMARY KEY , combustible TEXT)');
 
+bd.run('CREATE TABLE IF NOT EXISTS Tarjeta(id TEXT PRIMARY KEY , tarjeta TEXT)');
+
+bd.run('CREATE TABLE IF NOT EXISTS Errores(id TEXT PRIMARY KEY , problema TEXT)');
 const InsertarErrorPris = async (ErrorPris)=>{
   try{
      const id = uuidv4();
@@ -64,6 +67,56 @@ const InsertCombustible = async (combustible)=>{
   }
 }
 
+const InsertTarjeta = async (tarjeta)=>{
+
+  try{
+     const id = uuidv4();
+     let stmt = bd.prepare('INSERT INTO Tarjeta(id , tarjeta) VALUES(?,?)');
+     stmt.run(id, tarjeta);
+     stmt.finalize();
+     return { success: true, message: 'La tarjeta se ingresó con exito' };
+  }catch (error) {
+    console.error('Error al ingresar la tarjeta:', error);
+    return { success: false, message: 'Error al ingresar la tarjeta' };
+  }
+};
+
+const InsertProblema = async (problema)=>{
+
+  try{
+     const id = uuidv4();
+     let stmt = bd.prepare('INSERT INTO Errores(id , problema) VALUES(?,?)');
+     stmt.run(id, problema);
+     stmt.finalize();
+     return { success: true, message: 'El problema se ingresó con exito' };
+  }catch (error) {
+    console.error('Error al ingresar el problema:', error);
+    return { success: false, message: 'Error al ingresar el problema' };
+  }
+}
+
+const DataProblema = async ()=>{
+  return new Promise((resolve, reject) => {
+    bd.all('SELECT * FROM Errores', [], (error, rows) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(rows);
+      }
+    });
+})} 
+
+
+const DataTarjeta = async ()=>{
+  return new Promise((resolve, reject) => {
+    bd.all('SELECT * FROM Tarjeta', [], (error, rows) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(rows);
+      }
+    });
+})}
 const DataErrorPris = async ()=>{
   return new Promise((resolve, reject) => {
     bd.all('SELECT * FROM ErrorPris', [], (error, rows) => {
@@ -163,5 +216,9 @@ export default{
   GetRoles, 
   consultUsuario,
   InsertCombustible,
-  consultCombustible
+  consultCombustible,
+  InsertTarjeta,
+  DataTarjeta,
+  InsertProblema,
+  DataProblema
 }
