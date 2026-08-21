@@ -93,6 +93,7 @@ app.get('/selectCombustible', secControllers.SelectCombustible);
 app.post('/crearTarjeta', secControllers.CrearTarjeta);
 app.get('/selectTarjeta', secControllers.SelectTarjeta);
 app.get('/selectProblema', secControllers.SelectProblema);
+app.post('/searchCombustible', secControllers.SearchCombustible);
 
 server.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);

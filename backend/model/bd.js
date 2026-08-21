@@ -163,7 +163,19 @@ const consultCombustible = async ()=>{
       }
     });
   })
-}
+};
+
+const SearchCombustible = async (combustible)=>{
+  return new Promise((resolve, reject) => {
+    bd.get('SELECT * FROM Combustible WHERE combustible LIKE ?', [`%${combustible}%`], (error, row) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};
 
 const SesionUsuario = (user) =>{
   return new Promise((resolve, reject)=>{
@@ -220,5 +232,6 @@ export default{
   InsertTarjeta,
   DataTarjeta,
   InsertProblema,
-  DataProblema
+  DataProblema,
+  SearchCombustible
 }
