@@ -86,10 +86,10 @@ const SelectCombustible = async (req , res)=>{
 const SearchCombustible = async (req, res) => {
     try {
         const combustible = req.body.query;
-       console.log(combustible);
+       
          const data = await bd.SearchCombustible(combustible);
        console.log(data)
-         // return res.status(200).json(data);
+          return res.status(200).json(data);
     } catch (error) {
         console.error('Error al buscar el combustible:', error);
         return res.status(500).json({ mensaje: 'Error al buscar el combustible' });
