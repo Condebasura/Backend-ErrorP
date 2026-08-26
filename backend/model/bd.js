@@ -177,6 +177,17 @@ const SearchCombustible = async (combustible)=>{
   });
 };
 
+const DeleteCombustible = (id)=>{
+  let sql = 'DELETE FROM Combustible WHERE id = ?';
+  bd.run(sql,[id],(err)=>{
+    if(err){
+      console.log("Error al eliminar el tipo de combustible");
+    }else{
+      console.log("El combustible se elimino correctamente")
+    }
+  })
+}
+
 const SesionUsuario = (user) =>{
   return new Promise((resolve, reject)=>{
     let sql = 'SELECT * FROM Usuario WHERE apellido = ?';
@@ -233,5 +244,6 @@ export default{
   DataTarjeta,
   InsertProblema,
   DataProblema,
-  SearchCombustible
+  SearchCombustible,
+  DeleteCombustible
 }

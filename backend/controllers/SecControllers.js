@@ -96,6 +96,17 @@ const SearchCombustible = async (req, res) => {
     }
 };
 
+const EliminarCombustible = async (req, res)=>{
+    try {
+        let id = await req.params.id;
+        console.log("el id es", id)
+       await bd.DeleteCombustible(id)
+        return res.status(200).json({mensaje:"El combustible se elimino correctamente"})
+    } catch (error) {
+        return res.status(500).json({mensaje: "Ocurrio un error al querer eliminar el tipo de combustible", error})
+    }
+}
+
 const CrearTarjeta = async (req, res)=>{
     try{
         const tarjeta = req.body.nombre;
@@ -233,6 +244,7 @@ export default{
     SelectTarjeta,
     CrearProblema,
     SelectProblema,
-    SearchCombustible
+    SearchCombustible,
+    EliminarCombustible
 }
 
