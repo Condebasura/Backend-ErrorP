@@ -188,6 +188,29 @@ const DeleteCombustible = (id)=>{
   })
 }
 
+const SearchTarjeta = async (tarjeta)=>{
+  return new Promise((resolve , reject)=>{
+   bd.get('SELECT * FROM Tarjeta WHERE tarjeta LIKE  ?' , [`%${tarjeta}%`], (err, row)=>{
+    if(err){
+      reject(err)
+    }else{
+      resolve(row)
+    }
+   })
+  })
+}
+
+const EliminarTarjeta = (id)=>{
+  let sql = 'DELETE FROM Tarjeta WHERE id = ?';
+  bd.run(sql,[id], (err)=>{
+    if(err){
+      console.log("Ocurio un error al eliminar la tarjeta")
+    }else{
+      console.log("Tarjeta eliminada correctamente")
+    }
+  })
+}
+
 const SesionUsuario = (user) =>{
   return new Promise((resolve, reject)=>{
     let sql = 'SELECT * FROM Usuario WHERE apellido = ?';
@@ -245,5 +268,7 @@ export default{
   InsertProblema,
   DataProblema,
   SearchCombustible,
-  DeleteCombustible
+  DeleteCombustible,
+  SearchTarjeta,
+  EliminarTarjeta
 }

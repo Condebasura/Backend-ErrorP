@@ -94,7 +94,9 @@ app.post('/crearTarjeta', secControllers.CrearTarjeta);
 app.get('/selectTarjeta', secControllers.SelectTarjeta);
 app.get('/selectProblema', secControllers.SelectProblema);
 app.post('/searchCombustible', secControllers.SearchCombustible);
+app.post('/SearchTarjeta', secControllers.SearchTarjeta);
 app.delete('/eliminarCombustible/:id', secControllers.EliminarCombustible)
+app.delete('/eliminarTarjeta/:id', secControllers.EliminarTarjeta)
 
 server.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
