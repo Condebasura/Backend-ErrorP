@@ -151,7 +151,16 @@ const SelectTarjeta = async (req , res)=>{
     }
 }
 
-
+  const searchProblema = async(req, res)=>{
+   try {
+     const problema = req.body.query;
+     const data = await bd.SearchProblema(problema);
+     return res.status(200).json(data);
+   } catch (error) {
+      console.error('Error al buscar la tarjeta:', error);
+        return res.status(500).json({ mensaje: 'Error al buscar el problema' });
+   }
+  }
 
     const CrearProblema = async (req, res)=>{
         try{
@@ -163,6 +172,17 @@ const SelectTarjeta = async (req , res)=>{
             return res.status(500).json({ mensaje: 'Error al crear el problema' });
         }
     };
+
+    const EliminarProblema = async (req, res)=>{
+    try {
+        let id = await req.params.id;
+        
+       await bd.EliminarProblema(id)
+        return res.status(200).json({mensaje:"El problema se elimino correctamente"})
+    } catch (error) {
+        return res.status(500).json({mensaje: "Ocurrio un error al querer eliminar el problema", error})
+    }
+}
 
     const SelectProblema = async (req, res)=>{
         try {
@@ -273,6 +293,8 @@ export default{
     SearchCombustible,
     EliminarCombustible, 
     SearchTarjeta,
-    EliminarTarjeta
+    EliminarTarjeta, 
+    searchProblema,
+    EliminarProblema
 }
 

@@ -93,6 +93,29 @@ const InsertProblema = async (problema)=>{
     console.error('Error al ingresar el problema:', error);
     return { success: false, message: 'Error al ingresar el problema' };
   }
+};
+
+const SearchProblema = async (problema)=>{
+  return new Promise((resolve, reject)=>{
+    bd.get('SELECT * FROM Errores WHERE problema LIKE ?', [`%${problema}%`], (error, row)=>{
+      if(error){
+        reject(error)
+      }else{
+        resolve(row)
+      }
+    })
+  })
+}
+
+const EliminarProblema = (id)=>{
+  let sql = 'DELETE FROM Errores WHERE id = ?';
+  bd.run(sql,[id], (err)=>{
+    if(err){
+      console.log("Ocurio un error al eliminar el problema")
+    }else{
+      console.log("Problema eliminado correctamente")
+    }
+  })
 }
 
 const DataProblema = async ()=>{
@@ -270,5 +293,7 @@ export default{
   SearchCombustible,
   DeleteCombustible,
   SearchTarjeta,
-  EliminarTarjeta
+  EliminarTarjeta,
+  SearchProblema,
+  EliminarProblema
 }
