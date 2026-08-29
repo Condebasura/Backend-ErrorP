@@ -96,6 +96,7 @@ app.get('/selectProblema', secControllers.SelectProblema);
 app.post('/searchCombustible', secControllers.SearchCombustible);
 app.post('/SearchTarjeta', secControllers.SearchTarjeta);
 app.post("/SearchProblema", secControllers.searchProblema)
+app.post('/searchUsuario', secControllers.SearchUsuario);
 app.delete('/eliminarCombustible/:id', secControllers.EliminarCombustible)
 app.delete('/eliminarTarjeta/:id', secControllers.EliminarTarjeta);
 app.delete("/eliminarProblema/:id", secControllers.EliminarProblema);

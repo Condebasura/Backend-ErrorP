@@ -61,6 +61,17 @@ const CrearUsuario = async (req, res) => {
     }
 };
 
+const SearchUsuario = async (req ,res)=>{
+    try{
+        const apeliido = req.body.query;
+        const data = await bd.SearchUsuario(apeliido);
+        return res.status(200).json(data);
+    }catch(error){
+        console.error('Error al buscar el usuario:', error);
+        return res.status(500).json({ mensaje: 'Error al buscar el usuario' });
+    }
+}
+
 const CrearCombustible = async (req, res) => {
     try {
         const combustible = req.body.nombre;
@@ -295,6 +306,7 @@ export default{
     SearchTarjeta,
     EliminarTarjeta, 
     searchProblema,
-    EliminarProblema
+    EliminarProblema, 
+    SearchUsuario
 }
 

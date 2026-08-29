@@ -97,7 +97,7 @@ const InsertProblema = async (problema)=>{
 
 const SearchProblema = async (problema)=>{
   return new Promise((resolve, reject)=>{
-    bd.get('SELECT * FROM Errores WHERE problema LIKE ?', [`%${problema}%`], (error, row)=>{
+    bd.all('SELECT * FROM Errores WHERE problema LIKE ?', [`%${problema}%`], (error, row)=>{
       if(error){
         reject(error)
       }else{
@@ -164,6 +164,18 @@ const BuscarUsuario = async (id) => {
   });
 };
 
+const SearchUsuario = async (apellido)=>{
+  return new Promise((resolve, reject)=>{
+    bd.all('SELECT * FROM Usuario WHERE apellido LIKE ?', [`%${apellido}%`], (error, row)=>{
+      if(error){
+        reject(error)
+      }else{
+        resolve(row)
+      }
+    })
+  })
+}
+
 const consultUsuario = async ()=>{
   return new Promise((resolve , reject)=>{
     bd.all('SELECT * FROM Usuario', (error, rows) => {
@@ -190,7 +202,7 @@ const consultCombustible = async ()=>{
 
 const SearchCombustible = async (combustible)=>{
   return new Promise((resolve, reject) => {
-    bd.get('SELECT * FROM Combustible WHERE combustible LIKE ?', [`%${combustible}%`], (error, row) => {
+    bd.all('SELECT * FROM Combustible WHERE combustible LIKE ?', [`%${combustible}%`], (error, row) => {
       if (error) {
         reject(error);
       } else {
@@ -213,7 +225,7 @@ const DeleteCombustible = (id)=>{
 
 const SearchTarjeta = async (tarjeta)=>{
   return new Promise((resolve , reject)=>{
-   bd.get('SELECT * FROM Tarjeta WHERE tarjeta LIKE  ?' , [`%${tarjeta}%`], (err, row)=>{
+   bd.all('SELECT * FROM Tarjeta WHERE tarjeta LIKE  ?' , [`%${tarjeta}%`], (err, row)=>{
     if(err){
       reject(err)
     }else{
@@ -295,5 +307,6 @@ export default{
   SearchTarjeta,
   EliminarTarjeta,
   SearchProblema,
-  EliminarProblema
+  EliminarProblema,
+  SearchUsuario
 }
