@@ -251,6 +251,39 @@ const PostUsuario = async (req, res)=>{
     }
 };
 
+const ActualizarUsuario = async (req,res)=>{
+
+    let usuario = {
+        id: req.body.id,
+        nombre: req.body.nombre,
+        apellido: req.body.apellido,
+        password: req.body.password, 
+        rol: req.body.rol,
+    }
+
+    let UserPass = usuario.password;
+    let datos = await bd.DataUsuario({id: usuario.id})
+    
+    try {
+        if(UserPass === '' || UserPass === undefined){
+            let PaswordAnterior = datos.password;
+            UserPass = PaswordAnterior;
+            console.log("Se mantiene la contraseña anterior");
+            let user ={
+                 id: req.body.id,
+        nombre: req.body.nombre,
+        apellido: req.body.apellido, 
+        rol: req.body.rol,
+            }
+            await bd.UpdateUsuarioSinPassword(user)
+        }else{
+            await bd.UpdateUsuario(usuario)
+        }
+    } catch (error) {
+        
+    }
+}
+
 const GetSesions = async (req, res) => {
     try {
         if(req.session.usuario){
@@ -307,6 +340,7 @@ export default{
     EliminarTarjeta, 
     searchProblema,
     EliminarProblema, 
-    SearchUsuario
+    SearchUsuario, 
+    ActualizarUsuario
 }
 

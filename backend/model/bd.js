@@ -174,7 +174,27 @@ const SearchUsuario = async (apellido)=>{
       }
     })
   })
+};
+
+const DataUsuario = async  (usuario)=>{
+  try {
+    return new Promise((resolve , reject)=>{
+      let sql = 'SELECT * FROM Usuario WHERE id = ?';
+      let id = usuario.id;
+      bd.get(sql,[id], (err, row)=>{
+        if(err){
+          reject(err);
+
+        }else{
+          resolve(row)
+        }
+      })
+    })
+  } catch (error) {
+    console.log("El usuario no existe", error)
+  }
 }
+
 
 const consultUsuario = async ()=>{
   return new Promise((resolve , reject)=>{
@@ -186,6 +206,40 @@ const consultUsuario = async ()=>{
       }
     });
   })
+}
+
+const UpdateUsuario = async (usuario)=>{
+  try {
+    
+    const hashedPassword = await bcrypt.hash(usuario.password , saltRounds)
+    
+      const sql = 'UPDATE  Usuario SET id = ? , nombre = ? , apellido = ? , password = ? , rol = ? WHERE id = ?';
+      bd.run(sql , [usuario.id , usuario.nombre , usuario.apellido , hashedPassword , usuario.rol , usuario.id], (err)=>{
+        if(err){
+          console.log(err.message)
+        }else{
+          console.log('Datos actualizados correctamente')
+        }
+      })
+  } catch (error) {
+    console.log(error.message)
+  }
+
+}
+
+const UpdateUsuarioSinPassword = async (user)=>{
+  try {
+      const sql = 'UPDATE  Usuario SET id = ? , nombre = ? , apellido = ? , rol = ? WHERE id = ?';
+      bd.run(sql , [user.id , user.nombre , user.apellido , user.rol , user.id], (err)=>{
+        if(err){
+          console.log(err.message)
+        }else{
+          console.log('Datos actualizados correctamente')
+        }
+      })
+  } catch (error) {
+    console.log(error.message)
+  }
 }
 
 const consultCombustible = async ()=>{
@@ -308,5 +362,8 @@ export default{
   EliminarTarjeta,
   SearchProblema,
   EliminarProblema,
-  SearchUsuario
+  SearchUsuario,
+  DataUsuario,
+  UpdateUsuario,
+  UpdateUsuarioSinPassword
 }
