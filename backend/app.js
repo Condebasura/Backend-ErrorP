@@ -100,7 +100,8 @@ app.post('/searchUsuario', secControllers.SearchUsuario);
 app.delete('/eliminarCombustible/:id', secControllers.EliminarCombustible)
 app.delete('/eliminarTarjeta/:id', secControllers.EliminarTarjeta);
 app.delete("/eliminarProblema/:id", secControllers.EliminarProblema);
-app.put("/modificarUsuario", secControllers.ActualizarUsuario)
+app.put("/modificarUsuario", secControllers.ActualizarUsuario);
+app.delete("/eliminarUsuario/:id", secControllers.EliminarUsuario);
 
 server.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);

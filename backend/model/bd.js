@@ -242,6 +242,17 @@ const UpdateUsuarioSinPassword = async (user)=>{
   }
 }
 
+const DeleteUsuario = (id)=>{
+  let sql = 'DELETE FROM Usuario WHERE id = ?';
+  bd.run(sql,[id],(err)=>{
+    if(err){
+      console.log("Error al eliminar el usuario");
+    }else{
+      console.log("El usuario se elimino correctamente")
+    }
+  })
+}
+
 const consultCombustible = async ()=>{
   return new Promise((resolve , reject)=>{
     bd.all('SELECT * FROM Combustible', (error, rows) => {
@@ -365,5 +376,6 @@ export default{
   SearchUsuario,
   DataUsuario,
   UpdateUsuario,
-  UpdateUsuarioSinPassword
+  UpdateUsuarioSinPassword, 
+  DeleteUsuario
 }

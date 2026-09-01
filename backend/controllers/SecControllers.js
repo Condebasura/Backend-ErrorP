@@ -282,7 +282,19 @@ const ActualizarUsuario = async (req,res)=>{
     } catch (error) {
         
     }
-}
+};
+
+const EliminarUsuario = async (req, res)=>{
+    try {
+        let id = await req.params.id;
+          const data =  bd.DeleteUsuario(id);
+        
+       return res.status(200).json({ mensaje: 'Usuario eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar el usuario:', error);
+        return res.status(500).json({ mensaje: 'Error al eliminar el usuario' });
+    }
+};
 
 const GetSesions = async (req, res) => {
     try {
@@ -341,6 +353,7 @@ export default{
     searchProblema,
     EliminarProblema, 
     SearchUsuario, 
-    ActualizarUsuario
+    ActualizarUsuario,
+    EliminarUsuario
 }
 
