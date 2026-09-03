@@ -65,7 +65,20 @@ const InsertCombustible = async (combustible)=>{
     console.error('Error al ingresar el combustible:', error);
     return { success: false, message: 'Error al ingresar el combustible' };
   }
-}
+};
+
+//Cambiar la logica de la funcion UpdateCombustible para que reciba el id del combustible a actualizar y el nuevo valor del combustible.
+const UpdateCombustible = async (combustible)=>{
+  try{
+     let stmt = bd.prepare('UPDATE Combustible SET combustible = ? WHERE id = ?');
+     stmt.run(combustible, id);
+     stmt.finalize();
+     return { success: true, message: 'El combustible se actualizó con exito' };
+  }catch (error) {
+    console.error('Error al actualizar el combustible:', error);
+    return { success: false, message: 'Error al actualizar el combustible' };
+  }
+};
 
 const InsertTarjeta = async (tarjeta)=>{
 
@@ -362,6 +375,7 @@ export default{
   GetRoles, 
   consultUsuario,
   InsertCombustible,
+  UpdateCombustible,
   consultCombustible,
   InsertTarjeta,
   DataTarjeta,

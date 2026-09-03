@@ -83,6 +83,24 @@ const CrearCombustible = async (req, res) => {
     }
 };
 
+const ActualizarCombustible = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+
+console.log("El combustible a actualizar es:", id);
+
+       let data = await bd.consultCombustible(id);
+       console.log("El combustible a actualizar es:", data);
+
+       // const data = await bd.UpdateCombustible(combustible);
+       // return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al actualizar el combustible:', error);
+        return res.status(500).json({ mensaje: 'Error al actualizar el combustible' });
+    }
+};
+
 const SelectCombustible = async (req , res)=>{
     try {
         const data = await bd.consultCombustible();
@@ -275,12 +293,15 @@ const ActualizarUsuario = async (req,res)=>{
         apellido: req.body.apellido, 
         rol: req.body.rol,
             }
-            await bd.UpdateUsuarioSinPassword(user)
+            await bd.UpdateUsuarioSinPassword(user);
+            return res.status(200).json({mensaje: 'Usuario actualizado correctamente sin cambiar la contraseña'});  
         }else{
             await bd.UpdateUsuario(usuario)
+            return res.status(200).json({mensaje: 'Usuario actualizado correctamente con nueva contraseña'});
         }
     } catch (error) {
-        
+        console.error('Error al actualizar el usuario:', error);
+        return res.status(500).json({ mensaje: 'Error al actualizar el usuario' });
     }
 };
 
@@ -341,6 +362,7 @@ export default{
     GetSesions,
     SelectUsuario,
     CrearCombustible,
+    ActualizarCombustible,
     SelectCombustible,
     CrearTarjeta,
     SelectTarjeta,
