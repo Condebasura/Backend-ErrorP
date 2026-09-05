@@ -98,7 +98,8 @@ app.post('/SearchTarjeta', secControllers.SearchTarjeta);
 app.post("/SearchProblema", secControllers.searchProblema)
 app.post('/searchUsuario', secControllers.SearchUsuario);
 app.put("/modificarUsuario", secControllers.ActualizarUsuario);
-app.put("/modificarCombustible/:id", secControllers.ActualizarCombustible);
+app.put("/modificarCombustible", secControllers.ActualizarCombustible);
+app.put("/modificarTarjeta", secControllers.UpdateTarjeta);
 app.delete('/eliminarCombustible/:id', secControllers.EliminarCombustible)
 app.delete('/eliminarTarjeta/:id', secControllers.EliminarTarjeta);
 app.delete("/eliminarProblema/:id", secControllers.EliminarProblema);

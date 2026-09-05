@@ -67,15 +67,18 @@ const InsertCombustible = async (combustible)=>{
   }
 };
 
-//Cambiar la logica de la funcion UpdateCombustible para que reciba el id del combustible a actualizar y el nuevo valor del combustible.
+
 const UpdateCombustible = async (combustible)=>{
   try{
-     let stmt = bd.prepare('UPDATE Combustible SET combustible = ? WHERE id = ?');
-     stmt.run(combustible, id);
-     stmt.finalize();
-     return { success: true, message: 'El combustible se actualizó con exito' };
+    let sql = 'UPDATE Combustible SET id = ?, combustible = ? WHERE id = ?';
+    bd.run(sql, [combustible.id, combustible.combustible, combustible.id], (err)=>{
+      if(err){
+        console.log("Ocurio un error al actualizar el combustible")
+      }else{
+        console.log("Combustible actualizado correctamente")
+      }
+    })
   }catch (error) {
-    console.error('Error al actualizar el combustible:', error);
     return { success: false, message: 'Error al actualizar el combustible' };
   }
 };
@@ -91,6 +94,22 @@ const InsertTarjeta = async (tarjeta)=>{
   }catch (error) {
     console.error('Error al ingresar la tarjeta:', error);
     return { success: false, message: 'Error al ingresar la tarjeta' };
+  }
+};
+
+
+const UpdateTarjeta = async (tarjeta)=>{
+  try{
+    let sql = 'UPDATE Tarjeta SET id = ?, tarjeta = ? WHERE id = ?';
+    bd.run(sql, [tarjeta.id, tarjeta.tarjeta, tarjeta.id], (err)=>{
+      if(err){
+        console.log("Ocurio un error al actualizar la tarjeta")
+      }else{
+        console.log("Tarjeta actualizada correctamente")
+      }
+    })
+  }catch (error) {
+    return { success: false, message: 'Error al actualizar la tarjeta' };
   }
 };
 
@@ -153,6 +172,27 @@ const DataTarjeta = async ()=>{
       }
     });
 })}
+
+const DataCombustible = async  (combustible)=>{
+  try {
+    return new Promise((resolve , reject)=>{
+      let sql = 'SELECT * FROM Combustible WHERE id = ?';
+      let id = combustible.id;
+      bd.get(sql,[id], (err, row)=>{
+        if(err){
+          reject(err);
+
+        }else{
+          resolve(row)
+        }
+      })
+    })
+  } catch (error) {
+    console.log("El combustible no existe", error)
+  }
+}
+
+
 const DataErrorPris = async ()=>{
   return new Promise((resolve, reject) => {
     bd.all('SELECT * FROM ErrorPris', [], (error, rows) => {
@@ -374,10 +414,12 @@ export default{
   SesionUsuario,
   GetRoles, 
   consultUsuario,
+  DataCombustible,
   InsertCombustible,
   UpdateCombustible,
   consultCombustible,
   InsertTarjeta,
+  UpdateTarjeta,
   DataTarjeta,
   InsertProblema,
   DataProblema,

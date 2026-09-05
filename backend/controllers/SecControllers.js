@@ -85,16 +85,13 @@ const CrearCombustible = async (req, res) => {
 
 const ActualizarCombustible = async (req, res) => {
     try {
-        const id = req.params.id;
-
-
-console.log("El combustible a actualizar es:", id);
-
-       let data = await bd.consultCombustible(id);
-       console.log("El combustible a actualizar es:", data);
-
-       // const data = await bd.UpdateCombustible(combustible);
-       // return res.status(200).json(data);
+        const combustible = {
+            id: req.body.id,
+            combustible: req.body.Combustible
+        };
+           
+        await bd.UpdateCombustible(combustible);
+        return res.status(200).json({mensaje: 'El combustible se actualizó con exito'});
     } catch (error) {
         console.error('Error al actualizar el combustible:', error);
         return res.status(500).json({ mensaje: 'Error al actualizar el combustible' });
@@ -144,6 +141,21 @@ const CrearTarjeta = async (req, res)=>{
     } catch (error) {
         console.error('Error al crear la tarjeta:', error);
         return res.status(500).json({ mensaje: 'Error al crear la tarjeta' });
+    }
+};
+
+const UpdateTarjeta = async (req , res)=>{
+    try{
+        const tarjeta = {
+            id: req.body.id,
+            tarjeta: req.body.Tarjeta
+        };
+           
+        await bd.UpdateTarjeta(tarjeta);
+        return res.status(200).json({mensaje: 'La tarjeta se actualizó con exito'});
+    } catch (error) {
+        console.error('Error al actualizar la tarjeta:', error);
+        return res.status(500).json({ mensaje: 'Error al actualizar la tarjeta' });
     }
 };
 
@@ -371,6 +383,7 @@ export default{
     SearchCombustible,
     EliminarCombustible, 
     SearchTarjeta,
+    UpdateTarjeta,
     EliminarTarjeta, 
     searchProblema,
     EliminarProblema, 
