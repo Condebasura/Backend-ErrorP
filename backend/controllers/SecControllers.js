@@ -159,6 +159,8 @@ const UpdateTarjeta = async (req , res)=>{
     }
 };
 
+
+
 const SelectTarjeta = async (req , res)=>{
     try {
         const data = await bd.DataTarjeta();
@@ -213,6 +215,22 @@ const SelectTarjeta = async (req , res)=>{
             return res.status(500).json({ mensaje: 'Error al crear el problema' });
         }
     };
+
+    const ActualizarProblema = async (req, res)=>{
+        try{
+            const problema = {
+                id: req.body.id,
+                problema: req.body.Problema
+            };
+        await bd.UpdateProblema(problema);
+        return res.status(200).json({mensaje: 'El problema se actualizó con exito'});
+    
+    
+    }catch (error) {
+        console.error('Error al actualizar el problema:', error);
+        return res.status(500).json({ mensaje: 'Error al actualizar el problema' });    
+    }};
+
 
     const EliminarProblema = async (req, res)=>{
     try {
@@ -386,6 +404,7 @@ export default{
     UpdateTarjeta,
     EliminarTarjeta, 
     searchProblema,
+    ActualizarProblema,
     EliminarProblema, 
     SearchUsuario, 
     ActualizarUsuario,

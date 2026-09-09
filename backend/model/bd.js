@@ -113,6 +113,22 @@ const UpdateTarjeta = async (tarjeta)=>{
   }
 };
 
+
+const UpdateProblema = async (problema)=>{
+  try{
+    let sql = 'UPDATE Errores SET id = ?, problema = ? WHERE id = ?';
+    bd.run(sql, [problema.id, problema.problema, problema.id], (err)=>{
+      if(err){
+        console.log("Ocurio un error al actualizar el problema")
+      }else{
+        console.log("Problema actualizado correctamente")
+      }
+    })
+  }catch (error) {
+    return { success: false, message: 'Error al actualizar el problema' };
+  }
+};
+
 const InsertProblema = async (problema)=>{
 
   try{
@@ -428,6 +444,7 @@ export default{
   SearchTarjeta,
   EliminarTarjeta,
   SearchProblema,
+  UpdateProblema,
   EliminarProblema,
   SearchUsuario,
   DataUsuario,
