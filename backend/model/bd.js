@@ -38,6 +38,21 @@ const InsertarErrorPris = async (ErrorPris)=>{
     return { success: false, message: 'Error al enviar el problema' };
   } 
 };
+
+const DeleteErrorPris = (id)=>{
+
+    let sql = 'DELETE FROM ErrorPris WHERE id = ?';
+    bd.run(sql, [id], (err)=>{
+      if(err){
+        console.log("Ocurio un error al eliminar el problema")
+      }else{
+        console.log("Problema eliminado correctamente")
+      }
+    })
+ 
+};
+
+
   
 const InsertarUsuario = async (Usuario)=>{
   try{
@@ -425,6 +440,7 @@ const GetRoles = async () =>{
 export default{
   InsertarErrorPris,
   DataErrorPris,
+  DeleteErrorPris,
   InsertarUsuario,
   BuscarUsuario,
   SesionUsuario,

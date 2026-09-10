@@ -101,6 +101,7 @@ app.put("/modificarUsuario", secControllers.ActualizarUsuario);
 app.put("/modificarCombustible", secControllers.ActualizarCombustible);
 app.put("/modificarTarjeta", secControllers.UpdateTarjeta);
 app.put("/modificarProblema", secControllers.ActualizarProblema);
+app.delete('/eliminarErrorPris/:id', secControllers.EliminarErrorPris);
 app.delete('/eliminarCombustible/:id', secControllers.EliminarCombustible)
 app.delete('/eliminarTarjeta/:id', secControllers.EliminarTarjeta);
 app.delete("/eliminarProblema/:id", secControllers.EliminarProblema);
