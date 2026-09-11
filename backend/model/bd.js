@@ -39,6 +39,23 @@ const InsertarErrorPris = async (ErrorPris)=>{
   } 
 };
 
+const UpdateErrorPris = async (ErrorPris)=>{
+
+  try{
+    let sql = 'UPDATE ErrorPris SET id = ?, fecha = ?, hora = ?, combustible = ?, monto = ?, problema = ?, como_se_cobro = ?, monto_cobrado = ?, observaciones = ?, id_usuario = ? WHERE id = ?';
+  
+    bd.run(sql, [ErrorPris.id, ErrorPris.fecha, ErrorPris.hora, ErrorPris.combustible, ErrorPris.monto, ErrorPris.problema, ErrorPris.como_se_cobro, ErrorPris.monto_cobrado, ErrorPris.observaciones, ErrorPris.id_usuario, ErrorPris.id], (err)=>{
+      if(err){
+        console.log("Ocurio un error al actualizar el problema")
+      }else{
+        console.log("Problema actualizado correctamente")
+      }
+  })
+  }
+    catch (error) {
+      return { success: false, message: 'Error al actualizar el problema' };
+  }}
+
 const DeleteErrorPris = (id)=>{
 
     let sql = 'DELETE FROM ErrorPris WHERE id = ?';
@@ -440,6 +457,7 @@ const GetRoles = async () =>{
 export default{
   InsertarErrorPris,
   DataErrorPris,
+  UpdateErrorPris,
   DeleteErrorPris,
   InsertarUsuario,
   BuscarUsuario,
