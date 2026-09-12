@@ -49,21 +49,14 @@ const UpdateErrorPris = async (req, res) => {
     try {
         const id = req.params.id;
         const ErrorPris = {
-            id: req.body.id,
-            fecha: req.body.fecha,
-            hora: req.body.hora,
-            combustible: req.body.combustible,
-            monto: req.body.monto,
-            problema: req.body.problema,
-            como_se_cobro: req.body.como_se_cobro,
-            monto_cobrado: req.body.monto_cobrado,
-            observaciones: req.body.observaciones,
-            id_usuario: req.body.id_usuario
+            id: id,
+           observaciones: req.body.observaciones,
+            
         };
-
-        console.log("Datos a actualizar:", ErrorPris);
-        await bd.UpdateErrorPris(ErrorPris);
-        return res.status(200).json({ mensaje: 'El problema se actualizó con éxito' });
+        
+            await bd.UpdateErrorPris(ErrorPris);
+            return res.status(200).json({ mensaje: 'El problema se actualizó con éxito' });
+    
     } catch (error) {
         console.error('Error al actualizar el problema:', error);
         return res.status(500).json({ mensaje: 'Error al actualizar el problema' });
