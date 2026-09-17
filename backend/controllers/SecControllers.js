@@ -55,6 +55,7 @@ const UpdateErrorPris = async (req, res) => {
         };
         
             await bd.UpdateErrorPris(ErrorPris);
+            console.log('El problema se actualizó con éxito')
             return res.status(200).json({ mensaje: 'El problema se actualizó con éxito' });
     
     } catch (error) {

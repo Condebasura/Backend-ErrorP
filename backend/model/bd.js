@@ -49,6 +49,7 @@ const UpdateErrorPris = async (ErrorPris)=>{
         console.log("Ocurio un error al actualizar el problema")
       }else{
         console.log("Problema actualizado correctamente")
+        
       }
   })
   }
