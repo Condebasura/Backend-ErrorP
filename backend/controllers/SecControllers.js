@@ -85,7 +85,7 @@ const CrearUsuario = async (req, res) => {
             rol: req.body.rol
         };
         const data = await bd.InsertarUsuario(Usuario);
-        return res.status(200).json(data);
+        return res.status(200).json({mensaje:"El usuario se creo con exito"},data);
     } catch (error) {
         console.error('Error al crear el usuario:', error);
         return res.status(500).json({ mensaje: 'Error al crear el usuario' });
@@ -107,7 +107,7 @@ const CrearCombustible = async (req, res) => {
     try {
         const combustible = req.body.nombre;
         const data = await bd.InsertCombustible(combustible);
-        return res.status(200).json(data);
+        return res.status(200).json({mensaje:"El combustible se creo con exito"},data);
     } catch (error) {
         console.error('Error al crear el combustible:', error);
         return res.status(500).json({ mensaje: 'Error al crear el combustible' });
@@ -168,7 +168,7 @@ const CrearTarjeta = async (req, res)=>{
     try{
         const tarjeta = req.body.nombre;
         const data = await bd.InsertTarjeta(tarjeta);
-        return res.status(200).json(data);
+        return res.status(200).json({mensaje:"La tarjeta se creo con exito"},data);
     } catch (error) {
         console.error('Error al crear la tarjeta:', error);
         return res.status(500).json({ mensaje: 'Error al crear la tarjeta' });
@@ -240,7 +240,7 @@ const SelectTarjeta = async (req , res)=>{
         try{
             const problema = req.body.nombre;
             const data = await bd.InsertProblema(problema);
-            return res.status(200).json(data);
+            return res.status(200).json({mensaje:"El problema se creo con exito"},data);
         } catch (error) {
             console.error('Error al crear el problema:', error);
             return res.status(500).json({ mensaje: 'Error al crear el problema' });
