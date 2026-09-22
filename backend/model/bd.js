@@ -30,7 +30,7 @@ const InsertarErrorPris = async (ErrorPris)=>{
      let stmt = bd.prepare('INSERT INTO ErrorPris(id , fecha , hora , combustible ,monto, problema , como_se_cobro ,monto_cobrado, observaciones, id_usuario) VALUES(?,?,?,?,?,?,?,?,?,?)');
      stmt.run(id, ErrorPris.fecha, ErrorPris.hora, ErrorPris.combustible,ErrorPris.monto, ErrorPris.problema, ErrorPris.como_se_cobro,ErrorPris.monto_cobrado, ErrorPris.observaciones, ErrorPris.id_usuario);
      stmt.finalize();
-     console.log(ErrorPris);
+     
      return { success: true, message: 'El problema se envio con exito' };
 
   }catch (error) {
@@ -76,7 +76,7 @@ const InsertarUsuario = async (Usuario)=>{
   try{
      const id = uuidv4();
      let stmt = bd.prepare('INSERT INTO Usuario(id , nombre , apellido , password , rol) VALUES(?,?,?,?,?)');
-     console.log(Usuario);
+     
      stmt.run(id, Usuario.nombre, Usuario.apellido, await bcrypt.hash(Usuario.password, saltRounds), Usuario.rol);
      stmt.finalize();
      return { success: true, message: 'El usuario se ingresó con exito' };

@@ -31,7 +31,7 @@ const EnviarErrorPris = async (req, res)=>{
         } 
 
     catch(error){
-        console.log(error);
+        return res.status(500).json({mensaje: 'Error al enviar el problema', error})
     }
 };
 
@@ -145,7 +145,7 @@ const SearchCombustible = async (req, res) => {
         const combustible = req.body.query;
        
          const data = await bd.SearchCombustible(combustible);
-       console.log(data)
+       
           return res.status(200).json(data);
     } catch (error) {
         console.error('Error al buscar el combustible:', error);
@@ -156,7 +156,7 @@ const SearchCombustible = async (req, res) => {
 const EliminarCombustible = async (req, res)=>{
     try {
         let id = await req.params.id;
-        console.log("el id es", id)
+    
        await bd.DeleteCombustible(id)
         return res.status(200).json({mensaje:"El combustible se elimino correctamente"})
     } catch (error) {
@@ -204,9 +204,9 @@ const SelectTarjeta = async (req , res)=>{
     const SearchTarjeta = async(req , res)=>{
         try {
             const tarjeta = req.body.query;
-            console.log(tarjeta)
+            
             const datos = await bd.SearchTarjeta(tarjeta);
-            console.log(datos)
+        
             return res.status(200).json(datos)
         } catch (error) {
             console.error('Error al buscar la tarjeta:', error);
@@ -305,8 +305,7 @@ const PostUsuario = async (req, res)=>{
             password: req.body.password,
         }
         const data = await bd.SesionUsuario(user);
-        
-        console.log("El id del usuario", data.id);
+    
         if(!data){
             return res.status(401).json({ mensaje: 'Credenciales incorrectas' });
         }else{
