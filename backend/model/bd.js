@@ -254,6 +254,18 @@ const DataErrorPris = async ()=>{
   });
 };
 
+const DataUser = async()=>{
+  return new Promise((resolve, reject)=>{
+    bd.all('SELECT * FROM Usuario', (error, rows)=>{
+      if(error){
+        reject(error)
+      }else{
+        resolve(rows)
+      }
+    })
+  })
+}
+
 const BuscarUsuario = async (id) => {
   return new Promise((resolve, reject) => {
     bd.get('SELECT * FROM Usuario WHERE id = ?', [id], (error, row) => {
@@ -483,6 +495,7 @@ export default{
   EliminarProblema,
   SearchUsuario,
   DataUsuario,
+  DataUser,
   UpdateUsuario,
   UpdateUsuarioSinPassword, 
   DeleteUsuario

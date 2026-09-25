@@ -74,7 +74,17 @@ const EliminarErrorPris = async (req, res) => {
         console.error('Error al eliminar el problema:', error);       
         return res.status(500).json({ mensaje: 'Error al eliminar el problema' });
     }
-}
+};
+
+const GetDataUser = async (req, res) => {
+    try {
+        const data = await bd.DataUser();  
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los datos' });
+    }
+};
 
 const CrearUsuario = async (req, res) => {
     try {
@@ -418,6 +428,7 @@ export default{
     UpdateErrorPris,
     GetDataErrorPris,
     EliminarErrorPris,
+    GetDataUser,
     CrearUsuario,
     GetRoles, 
     PostUsuario,

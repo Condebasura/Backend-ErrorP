@@ -86,6 +86,7 @@ app.post('/postUsuario', secControllers.PostUsuario);
 app.post('/crearCombustible', secControllers.CrearCombustible);
 app.post('/crearProblema', secControllers.CrearProblema);
 app.get('/Sesions', secControllers.GetSesions);
+app.get('/getDataUser', secControllers.GetDataUser);
 app.get('/selectUsuario', secControllers.SelectUsuario);
 app.get('/getDataErrorPris', secControllers.GetDataErrorPris);
 app.get('/getRoles', secControllers.GetRoles);
