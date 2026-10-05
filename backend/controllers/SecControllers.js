@@ -84,6 +84,36 @@ const GetDataUser = async (req, res) => {
     }
 };
 
+const getDataComb = async (req, res) => {
+    try {
+        const data = await bd.DataComb();  
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los datos' });
+    }
+}; 
+
+
+const getDataTarjeta = async (req, res) => {
+    try {
+        const data = await bd.DataTarjeta();  
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los datos' });
+    }};
+
+    const getDatatypoError = async (req, res) => {
+    try {
+        const data = await bd.DataProblema();  
+        return res.status(200).json(data);
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        return res.status(500).json({ mensaje: 'Error al obtener los datos' });
+    }};
+
+
 const CrearUsuario = async (req, res) => {
     try {
         const Usuario = {
@@ -427,11 +457,14 @@ export default{
     GetDataErrorPris,
     EliminarErrorPris,
     GetDataUser,
+    getDataTarjeta,
+    getDatatypoError,
     CrearUsuario,
     GetRoles, 
     PostUsuario,
     GetSesions,
     SelectUsuario,
+    getDataComb,
     CrearCombustible,
     ActualizarCombustible,
     SelectCombustible,

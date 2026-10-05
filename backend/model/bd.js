@@ -222,6 +222,18 @@ const DataTarjeta = async ()=>{
     });
 })}
 
+const DataComb = async ()=>{
+  return new Promise((resolve, reject)=>{
+    bd.all('SELECT * FROM Combustible' , [], (error , row)=>{
+      if(error){
+        reject(error)
+      }else{
+        resolve(row)
+      }
+    })
+  })
+}
+
 const DataCombustible = async  (combustible)=>{
   try {
     return new Promise((resolve , reject)=>{
@@ -478,6 +490,7 @@ export default{
   GetRoles, 
   consultUsuario,
   DataCombustible,
+  DataComb,
   InsertCombustible,
   UpdateCombustible,
   consultCombustible,
