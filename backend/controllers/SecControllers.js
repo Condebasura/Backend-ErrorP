@@ -9,7 +9,7 @@ const EnviarErrorPris = async (req, res)=>{
         let id= req.params.id;
         
             
-            
+            let DatosUser = await bd.BuscarUsuario(id)
             
 
         const ErrorPris = {
