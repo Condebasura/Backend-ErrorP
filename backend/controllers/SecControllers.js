@@ -25,7 +25,7 @@ const EnviarErrorPris = async (req, res)=>{
         }
             const data = await bd.InsertarErrorPris(ErrorPris);
         
-            return res.status(200).json({mensaje: 'El problema se envio con exito'}); 
+            return res.status(200).json({mensaje: 'El problema se envio con exito, CERRANDO APP... '}); 
         } 
 
     catch(error){
