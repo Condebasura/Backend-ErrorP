@@ -14,7 +14,12 @@ const EnviarErrorPris = async (req, res)=>{
 
         const ErrorPris = {
             fecha: new Date().toLocaleDateString().slice(0, 10),
-            hora: new Date().toLocaleTimeString(),
+            hora: new Date().toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+}),
             combustible: req.body.combustible,
             monto: req.body.monto,
             problema: req.body.problema,
