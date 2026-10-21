@@ -4,7 +4,7 @@ import pkg from 'bcrypt';
 import bcrypt from 'bcrypt';
 
 const saltRounds = 10;
-let bd = new sqlite3.Database('./data/DataBase.db', (err) => {
+let bd = new sqlite3.Database('/var/lib/error-pris/DataBase.db', (err) => {
   if (err) {
     console.error('Error opening database', err);
   } else {
