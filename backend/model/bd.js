@@ -1,10 +1,18 @@
 import sqlite3 from 'sqlite3';
 import {v4 as uuidv4} from 'uuid';
-import pkg from 'bcrypt';
+import os from 'node:os';
+import fs from 'node:fs';
 import bcrypt from 'bcrypt';
-
+import path from 'node:path';
 const saltRounds = 10;
-let bd = new sqlite3.Database('/var/lib/error-pris/DataBase.db', (err) => {
+
+const carpetaDB = path.join(os.homedir(), 'datos-errorpris');
+
+fs.mkdirSync(carpetaDB , {recursive: true});
+
+const rutaDB = path.join(carpetaDB, 'DataBase.db')
+
+let bd = new sqlite3.Database(rutaDB, (err) => {
   if (err) {
     console.error('Error opening database', err);
   } else {
