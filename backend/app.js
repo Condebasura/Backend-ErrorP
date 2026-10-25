@@ -79,7 +79,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
-app.get("/", secControllers.getIndex);
+//app.get("/", secControllers.getIndex);
 app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
 app.post('/postUsuario', secControllers.PostUsuario);

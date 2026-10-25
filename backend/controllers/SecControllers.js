@@ -3,9 +3,9 @@ import {_dirname, io} from "../app.js";
 import path from "path";
 
 
-const getIndex = (req, res)=>{
+/*const getIndex = (req, res)=>{
     res.sendFile(path.join(_dirname, '..', 'index.html'))
-}
+}*/
 const EnviarErrorPris = async (req, res)=>{
     try{
 
@@ -461,7 +461,7 @@ const GetRoles = async (req, res) => {
 };
 
 export default{
-    getIndex,
+    //getIndex,
     EnviarErrorPris,
     UpdateErrorPris,
     GetDataErrorPris,
