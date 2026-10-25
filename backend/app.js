@@ -33,8 +33,9 @@ const sessionMiddleware = session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false,
-        sameSite: true
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false
     }
   
 });
@@ -78,11 +79,7 @@ app.use(session({
     secret: 'petro_tanque_ruido',
     resave: false,
     saveUninitialized: false,
-      cookie: {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: false
-    }
+      
 }))
 app.get("/", secControllers.getIndex);
 app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
