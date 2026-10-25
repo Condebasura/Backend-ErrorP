@@ -9,6 +9,11 @@
   },
   "scripts": {
     "dev": "nodemon app.js",
+    "start": "pm2 start app.js --name backend-errorp",
+  "stop": "pm2 stop backend-errorp",
+  "restart": "pm2 restart backend-errorp",
+  "logs": "pm2 logs backend-errorp",
+  "status": "pm2 status",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pablo C. Zabala",
