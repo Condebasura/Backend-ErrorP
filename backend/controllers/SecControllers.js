@@ -3,9 +3,10 @@ import {_dirname, io} from "../app.js";
 import path from "path";
 
 
-const getIndex = (req, res)=>{
-    res.sendFile(path.join(_dirname, 'index.html'))
-}
+const getIndex = (req, res) => {
+    res.status(200).send('Backend Error Pris funcionando');
+};
+
 const EnviarErrorPris = async (req, res)=>{
     try{
 
