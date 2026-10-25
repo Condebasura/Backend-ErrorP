@@ -22,7 +22,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:5173',
+        origin: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true
     }
@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
 
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: true,
     methods:['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 };
@@ -79,7 +79,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
-
+app.get("/", secControllers.getIndex);
 app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
 app.post('/postUsuario', secControllers.PostUsuario);
@@ -112,7 +112,7 @@ app.delete('/eliminarTarjeta/:id', secControllers.EliminarTarjeta);
 app.delete("/eliminarProblema/:id", secControllers.EliminarProblema);
 app.delete("/eliminarUsuario/:id", secControllers.EliminarUsuario);
 
-server.listen(port, () => {
+server.listen(port, '0.0.0.0',() => {
     console.log(`Servidor corriendo en el puerto ${port}`);
 });
 
