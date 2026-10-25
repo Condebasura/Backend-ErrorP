@@ -77,7 +77,12 @@ app.use(express.urlencoded({extended: false}));
 app.use(session({
     secret: 'petro_tanque_ruido',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false
+    }
 }))
 app.get("/", secControllers.getIndex);
 app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
