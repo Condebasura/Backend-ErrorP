@@ -34,8 +34,8 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        sameSite: 'lax',
-        secure: false
+        secure: true,
+        sameSite: 'none',
     }
   
 });
