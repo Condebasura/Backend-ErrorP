@@ -33,7 +33,9 @@ const sessionMiddleware = session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        sameSite: 'none',
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false
     }
   
 });
@@ -73,12 +75,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use(express.urlencoded({extended: false}));
-app.use(session({
-    secret: 'petro_tanque_ruido',
-    resave: false,
-    saveUninitialized: false,
-      
-}))
+app.use(sessionMiddleware);
+
 app.get("/", secControllers.getIndex);
 app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
 app.post('/crearUsuario', secControllers.CrearUsuario);
