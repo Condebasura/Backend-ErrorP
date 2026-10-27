@@ -34,11 +34,12 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        secure: false,
+        sameSite: 'lax',
     }
   
 });
+
 
 app.use(sessionMiddleware);
 io.use((socket, next) => {
@@ -75,7 +76,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use(express.urlencoded({extended: false}));
-app.use(sessionMiddleware);
 
 app.get("/", secControllers.getIndex);
 app.post('/enviarErrorPris/:id', secControllers.EnviarErrorPris);
