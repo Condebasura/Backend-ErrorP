@@ -32,11 +32,7 @@ const sessionMiddleware = session({
     secret: 'petro_tanque_ruido',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: false
-    }
+    cookie: {secure: false}
   
 });
 
