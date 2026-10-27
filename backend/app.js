@@ -5,7 +5,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import {fileURLToPath} from 'url';
-import http from 'http';
+import https from 'https';
+import fs from 'fs';
 import { Server } from 'socket.io';
 import session from 'express-session';
 import secControllers from './controllers/SecControllers.js';
@@ -18,7 +19,14 @@ const _dirname = (process.platform === 'win32')? fileURLToPath(new URL(".", impo
 
 const port = process.env.PORT || 4000;
 
-const server = http.createServer(app);
+const server = https.createServer({
+    key: fs.readFileSync(
+        path.join(process.env.HOME, 'certificados-errorpris', 'servidor-key.pem')
+    ),
+    cert: fs.readFileSync(
+        path.join(process.env.HOME, 'certificados-errorpris', 'servidor-cert.pem')
+    )
+}, app);
 
 const io = new Server(server, {
     cors: {
